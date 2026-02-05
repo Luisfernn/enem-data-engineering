@@ -1,0 +1,13 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Dados
+data/
+*.csv
+*.xlsx
+
+# Ambiente
+.env
+```
