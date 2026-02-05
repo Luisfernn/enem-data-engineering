@@ -56,7 +56,7 @@ def extract_data(file_path: Path = None):
     logger.info(f"{df.head(10)}\n")
 
     logger.info("Prévia das últimas 10 linhas:\n")
-    loggerinfo(f"{df.tail(10)}\n")
+    logger.info(f"{df.tail(10)}\n")
 
     return df
 
