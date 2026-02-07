@@ -9,7 +9,7 @@ logger = logger.getLogger(__name__)
 logger.addHandler(logger.NullHandler())
 logger.propagate=False
 
-base_dir = Path(__file__).resolv().parent.parent.parent
+base_dir = Path(__file__).resolve().parent.parent.parent
 file_path = base_dir / 'data' / 'raw' / 'renewable_energy_data.csv'
 
 
