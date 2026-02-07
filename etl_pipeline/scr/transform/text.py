@@ -15,6 +15,12 @@ file_path = base_dir / 'data' / 'raw' / 'renewable_energy_data.csv'
 
 # normalização dos nomes das colunas
 def normalize_columns_names(df):
+    
+    try:
+        df = pd.read_csv(file_path)
+    except Exception as e:
+        logger.error(f"❌ Arquivo não encontrado: {e}")
+
 
     normalized_columns={
         'Region': 'region',
@@ -37,12 +43,6 @@ def normalize_columns_names(df):
     }
 
     df = df.rename(columns=normalized_columns)
-
-
-    try:
-        df = pd.read_csv(file_path)
-    except Exception as e:
-        logger.error(f"❌ Arquivo não encontrado: {e}")
 
     
     # prévia dos dados
