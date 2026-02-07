@@ -63,4 +63,4 @@ if __name__ == "__main__":
     logger.addHandler(handler)
     logger.setLevel(logging.INFO) 
 
-    text()
+    normalize_columns_names()
