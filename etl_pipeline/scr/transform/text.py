@@ -16,7 +16,7 @@ file_path = base_dir / 'data' / 'raw' / 'renewable_energy_data.csv'
 # normalização dos nomes das colunas
 def normalize_columns_names(df):
 
-    normalized_columns{
+    normalized_columns={
         'Region': 'region',
         'Sub-region': 'sub_region',
         'Country': 'country',
