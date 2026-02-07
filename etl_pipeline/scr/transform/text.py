@@ -40,7 +40,7 @@ def normalize_columns_names(df):
 
 
     try:
-        df = read_csv(file_path)
+        df = pd.read_csv(file_path)
     except Exception as e:
         logger.error(f"❌ Arquivo não encontrado: {e}")
 
