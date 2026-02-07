@@ -29,16 +29,6 @@ def extract_data(file_path: Path = None):
         logger.error(f"⚠️ Erro ao ler o arquivo: {e}")
         return None
     
-    
-    # normaliza colunas
-    df.columns = (
-        df.columns.str.strip()
-                      .str.lower()
-                      .str.replace(r"[^a-z0-9]+", "_", regex=True)
-                      .str.replace(r"_+", "_", regex=True)
-                      .str.strip("_")
-    )
-
 
     # transforma o arquivo xlsx em csv
     try:
