@@ -5,9 +5,9 @@ import logging
 
 
 # configs de logger
-logger = logger.getLogger(__name__)
+logger = logging.getLogger(__name__)
 logger.addHandler(logger.NullHandler())
-logger.propagate=False
+logger.propagate = False
 
 base_dir = Path(__file__).resolve().parent.parent.parent
 file_path = base_dir / 'data' / 'raw' / 'renewable_energy_data.csv'
