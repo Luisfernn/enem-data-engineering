@@ -29,15 +29,7 @@ def extract_data(file_path: Path = None):
         logger.error(f"⚠️ Erro ao ler o arquivo: {e}")
         return None
     
-
-    # transforma o arquivo xlsx em csv
-    try:
-        df.to_csv(base_dir / 'data' / 'raw' / 'renewable_energy_data.csv' , index=False, encoding='utf-8') 
-    except Exception as e:
-        logger.error(f"⚠️ Erro ao transformar o arquivo: {e} em csv")
-        return None
-
-
+    
     # normaliza colunas
     df.columns = (
         df.columns.str.strip()
@@ -46,6 +38,14 @@ def extract_data(file_path: Path = None):
                       .str.replace(r"_+", "_", regex=True)
                       .str.strip("_")
     )
+
+
+    # transforma o arquivo xlsx em csv
+    try:
+        df.to_csv(base_dir / 'data' / 'raw' / 'renewable_energy_data.csv' , index=False, encoding='utf-8') 
+    except Exception as e:
+        logger.error(f"⚠️ Erro ao transformar o arquivo: {e} em csv")
+        return None
 
 
     # prévia dos dados
