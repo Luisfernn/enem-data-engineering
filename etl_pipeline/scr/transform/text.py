@@ -46,7 +46,10 @@ def normalize_columns_names(df = None):
 
     df = df.rename(columns=normalized_columns)
 
-    
+    # obriga o pandas a mostrar todas as colunas
+    pd.set_option('display.max_columns', None) 
+
+
     # prévia dos dados
     logger.info("Prévia das 10 primeiras linhas:\n")
     logger.info(f"{df.head(10)}\n")    
