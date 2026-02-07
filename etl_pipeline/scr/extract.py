@@ -10,7 +10,7 @@ logger.propagate = False
 def extract_data(file_path: Path = None):
 
     # path da pasta do projeto 
-    base_dir = Path(__file__).resolve().parent
+    base_dir = Path(__file__).resolve().parent.parent
  
 
     # verifica se o arquivo raw existe
