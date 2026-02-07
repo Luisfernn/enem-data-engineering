@@ -6,7 +6,7 @@ import logging
 
 # configs de logger
 logger = logging.getLogger(__name__)
-logger.addHandler(logger.NullHandler())
+logger.addHandler(logging.NullHandler())
 logger.propagate = False
 
 base_dir = Path(__file__).resolve().parent.parent.parent
