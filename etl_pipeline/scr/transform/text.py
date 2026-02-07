@@ -85,6 +85,8 @@ def cleaning_critic_colmuns(df= None):
     print(f"✅ Total removido: {before - after} registros")
     print(f"✅ Mantidos: {after} registros com identificação completa") 
 
+    print(df['technology'].unique())
+
     return df       
 
 # logger.info só funciona em execução local do script
