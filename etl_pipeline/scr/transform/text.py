@@ -14,12 +14,14 @@ file_path = base_dir / 'data' / 'raw' / 'renewable_energy_data.csv'
 
 
 # normalização dos nomes das colunas
-def normalize_columns_names(df):
+def normalize_columns_names(df = None):
     
-    try:
-        df = pd.read_csv(file_path)
-    except Exception as e:
-        logger.error(f"❌ Arquivo não encontrado: {e}")
+    # se executada localmente (função) lê o arquivo csv para mostrar prév dos dados  
+    if df is none:
+        try:
+            df = pd.read_csv(file_path)
+        except Exception as e:
+            logger.error(f"❌ Arquivo não encontrado: {e}")
 
 
     normalized_columns={
