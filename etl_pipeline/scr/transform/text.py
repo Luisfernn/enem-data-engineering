@@ -59,6 +59,40 @@ def normalize_columns_names(df = None):
     logger.info(f"{df.tail(10)}")
 
     return df
+
+
+
+def normalize_textual_columns(df = None) 
+
+    if df is None:
+        try:
+            df = pd.read_csv(file_path)
+        except Exception as e:
+            logger.error(f"❌ Arquivo não encontrado: {e}")
+
+
+    # nomes próprios
+    locations_columns = ['region', 'sub_region', 'country'] 
+    for col in locals_columns:
+        if col in df.columns:
+           df[col] = df[col].str.strip().title()
+
+    # código
+    df['iso3_code'] = df['iso3_code'].str.strip().upper()
+
+    # categorias
+    category_columns = ['renewable_or_not', 'group_technology', 'technology', 'sub_technology', 'producer_type']
+    
+    for col in category_columns:
+        if col in df.columns:
+
+            df[col] = (
+                df[col]
+                .str.replace('[*()]', '', regex=True)
+                .str.replace(' excl. ', ' excluding ')
+                .str.strip()
+                .str.lower()
+            ) 
                
 
 
@@ -73,7 +107,7 @@ def cleaning_critic_colmuns(df= None):
             logger.error(f"❌ Arquivo não encontrado: {e}")
 
 
-    critic_columuns = ['country', 'year', 'technology' ]
+    critic_columuns = ['country', 'year', 'technology']
 
     before = len(df)
 
