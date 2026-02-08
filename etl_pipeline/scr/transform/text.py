@@ -13,6 +13,7 @@ base_dir = Path(__file__).resolve().parent.parent.parent
 file_path = base_dir / 'data' / 'raw' / 'renewable_energy_data.csv'
 
 
+
 # normalização dos nomes das colunas
 def normalize_columns_names(df = None):
     
@@ -58,6 +59,7 @@ def normalize_columns_names(df = None):
     logger.info(f"{df.tail(10)}")
 
     return df
+               
 
 
 def cleaning_critic_colmuns(df= None):
@@ -89,7 +91,8 @@ def cleaning_critic_colmuns(df= None):
 
     return df 
 
-    
+
+
 # logger.info só funciona em execução local do script
 if __name__ == "__main__":
 
