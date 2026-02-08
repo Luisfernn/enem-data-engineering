@@ -62,6 +62,7 @@ def normalize_columns_names(df = None):
 
 
 
+# normaliza dados de colunas textuais
 def normalize_textual_columns(df = None) 
 
     if df is None:
@@ -96,9 +97,8 @@ def normalize_textual_columns(df = None)
                
 
 
+# remove linhas que os valores das colunas críticas não estão preenchidos
 def clean_critic_colmuns(df= None):
-
-    # remove linhas que os valores das colunas críticas não estão preenchidos, já que sem eles os dados não tem valor algum 
 
     if df is None:
         try:
@@ -116,6 +116,7 @@ def clean_critic_colmuns(df= None):
         if null_before > 0:
             print(f"⚠️ {null_before} registros sem '{col}' - removendo... ")
             df = df.dropna(subset=[col])
+
 
     after = len(df)
     print(f"✅ Total removido: {before - after} registros")
