@@ -63,7 +63,7 @@ def normalize_columns_names(df = None):
 
 
 # normaliza dados de colunas textuais
-def normalize_textual_columns(df = None) 
+def normalize_textual_columns(df = None):
 
     if df is None:
         try:
