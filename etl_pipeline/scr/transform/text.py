@@ -12,6 +12,9 @@ logger.propagate = False
 base_dir = Path(__file__).resolve().parent.parent.parent
 file_path = base_dir / 'data' / 'raw' / 'renewable_energy_data.csv'
 
+# obriga o pandas a mostrar todas as colunas
+pd.set_option('display.max_columns', None) 
+
 
 
 # normalização dos nomes das colunas
@@ -47,8 +50,6 @@ def normalize_columns_names(df = None):
 
     df = df.rename(columns=normalized_columns)
 
-    # obriga o pandas a mostrar todas as colunas
-    pd.set_option('display.max_columns', None) 
 
 
     # prévia dos dados
