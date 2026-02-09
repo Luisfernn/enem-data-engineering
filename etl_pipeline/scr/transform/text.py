@@ -59,6 +59,8 @@ def normalize_columns_names(df = None):
     logger.debug("Prévia das últimas 10 linhas:\n")
     logger.debug(f"{df.tail(10)}")
 
+    logger.info("\n✅ Normalização dos nomes de colunas concluida!")
+
     return df
 
 
