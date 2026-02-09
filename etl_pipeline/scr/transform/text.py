@@ -136,7 +136,7 @@ def clean_critic_colmuns(df= None):
     print(f"Total removido: {before - after} registros")
     print(f"Mantidos: {after} registros com identificação completa") 
 
-     logger.debug("\nclean_critic_colmuns")
+    logger.debug("\nclean_critic_colmuns")
     logger.debug("\nPrévia das 5 primeiras linhas:")
     logger.debug(f"\n{df.head(5)}")
     logger.debug("\nPrévia das últimas 5 linhas:")
