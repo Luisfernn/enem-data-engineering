@@ -103,7 +103,7 @@ def normalize_textual_columns(df = None):
     logger.debug("\Prévia das últimas 5 linhas:")
     logger.debug(f"\n{df.tail(5)}")
 
-    logger.info("\n✅ Normalização de dados de colunas textuais concluída")
+    logger.info("\n✅ Normalização de dados de colunas textuais concluída!")
 
                
     return df           
@@ -141,7 +141,7 @@ def clean_critic_colmuns(df= None):
     logger.debug("\Prévia das últimas 5 linhas:")
     logger.debug(f"\n{df.tail(5)}")
 
-    logger.info("\n✅ Limpeza de registros que não tem dados nas colunas críticas concluída")
+    logger.info("\n✅ Limpeza de registros sem dados em colunas críticas concluída!")
 
     return df 
 
