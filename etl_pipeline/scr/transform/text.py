@@ -130,13 +130,13 @@ def clean_data(df= None):
             print(f"⚠️ {null_before} registros sem '{col}' - removendo... ")
             df = df.dropna(subset=[col])
 
-    invalid_region = ['Unspecified Countries']
 
-    for col in invalid_region:
-        null_before = df[col].isna().sum()
-        if null_before > 0:
-            print(f"⚠️ {null_before} registros em {col} - removendo...")
-            df = df.dropna(subset=[col])        
+    invalid_region = ['Unspecified Countries']
+    mask = df['region'].isin(invalid_region)
+    count = mask.sum()
+    if count > 0:
+        print(f"⚠️ {count} registros com região inválida - removendo...")
+        df = df[~mask]
 
 
     after = len(df)
