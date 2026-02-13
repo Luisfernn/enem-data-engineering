@@ -60,7 +60,7 @@ def normalize_text_columns(df = None):
     return df
 
 
-def apply_rules(df):
+def apply_text_rules(df):
 
     tech_map = {
         'other primary solid biofuels n.e.s.': 'other primary',
@@ -117,7 +117,7 @@ def normalize_text_data(df = None):
                 .str.lower()
             ) 
 
-    df = apply_rules(df)        
+    df = apply_text_rules(df)        
 
 
     logger.debug("\nnormalize_textual_columns\n")
