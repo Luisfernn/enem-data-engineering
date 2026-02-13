@@ -111,7 +111,7 @@ def normalize_textual_columns(df = None):
 
 
 # remove linhas que os valores das colunas críticas não estão preenchidos
-def clean_critic_colmuns(df= None):
+def clean_data(df= None):
 
     if df is None:
         try:
