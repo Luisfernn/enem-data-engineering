@@ -129,9 +129,9 @@ def clean_data(df= None):
             print("✅ Nenhum registro com valor nulo nas colunas críticas!")   
 
 
- #remove linhas com valor inválido na coluna region
+ #remove linhas com valor inválido na coluna country
     invalid_region = ['Unspecified Countries']
-    mask = df['region'].isin(invalid_region)
+    mask = df['country'].isin(invalid_region)
     count = mask.sum()
     if count > 0:
         print(f"⚠️ {count} registros com região inválida - removendo...")
