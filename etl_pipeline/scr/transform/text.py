@@ -64,8 +64,6 @@ def apply_text_rules(df):
 
     detail_col = ['technology', 'sub_technology']
 
-    group_col = ['group_technology']
-
     for col in detail_col:
         if col in df.columns:
             df[col] = (df[col]
@@ -76,10 +74,13 @@ def apply_text_rules(df):
                        .str.strip())
 
 
+
     if 'group_technology' in df.columns:
         df['group_technology'] = (df['group_technology']
                                   .str.replace(' n.e.s.', '', regex=False)
                                   .str.strip())     
+
+
 
     tech_mapping = {
         'crops': 'energy crops',
