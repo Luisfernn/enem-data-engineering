@@ -81,8 +81,15 @@ def apply_text_rules(df):
                                   .str.replace(' n.e.s.', '', regex=False)
                                   .str.strip())     
 
-    df.loc[df['sub_technology'] == 'crops', 'sub_technology'] = 'energy crops'
-    df.loc[df['sub_technology'] == 'other biogases from anaerobic fermentation', 'sub_technology'] = 'biogas anaerobic'                                 
+    tech_mapping = {
+        'crops': 'energy crops',
+        'other biogases from anaerobic fermentation': 'biogas anaerobic',
+        'other primary solid biofuels': 'other primary biofuels'
+    }
+
+    for col in ['technology', 'sub_technology']:
+        if col in df.columns:
+            df[col] = df[col].replace(tech_mapping)                              
 
     return df                       
 
