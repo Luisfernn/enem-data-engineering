@@ -71,7 +71,7 @@ def apply_text_rules(df):
 
 
     for col in df['sub_technology'], df['renewable_or_not']:
-        if col in tech_map:
+        if col in df.columns:
             df[col] = (df[col]
                        .replace(tech_map)
                        .str.replace('n.e.s.', '', regex=False)
