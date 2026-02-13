@@ -53,9 +53,7 @@ def normalize_columns_names(df = None):
 
 
     logger.debug("\nnormalize_columns_names\n")
-    logger.debug("Prévia das 10 primeiras linhas:")
     logger.debug(f"\n{df.head(10)}\n")    
-    logger.debug("Prévia das últimas 10 linhas:")
     logger.debug(f"\n{df.tail(10)}")
 
     logger.info("\n✅ Normalização dos nomes de colunas concluida!")
@@ -98,9 +96,7 @@ def normalize_textual_columns(df = None):
             ) 
 
     logger.debug("\nnormalize_textual_columns\n")
-    logger.debug("Prévia das 5 primeiras linhas:")
     logger.debug(f"\n{df.head(5)}\n")
-    logger.debug("\Prévia das últimas 5 linhas:")
     logger.debug(f"\n{df.tail(5)}")
 
     logger.info("\n✅ Normalização de dados de colunas textuais concluída!")
@@ -144,9 +140,7 @@ def clean_data(df= None):
     print(f"Mantidos: {after} registros com identificação completa") 
 
     logger.debug("\nclean_critic_colmuns\n")
-    logger.debug("Prévia das 5 primeiras linhas:")
     logger.debug(f"\n{df.head(5)}\n")
-    logger.debug("\Prévia das últimas 5 linhas:")
     logger.debug(f"\n{df.tail(5)}")
 
     logger.info("\n✅ Limpeza de registros sem dados em colunas críticas concluída!")
