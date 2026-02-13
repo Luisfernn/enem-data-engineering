@@ -80,7 +80,7 @@ def apply_rules(df):
                        .str.strip())
 
             df.loc[df[col] == 'crops', col] = 'energy crops'
-            
+
     return df                       
 
 
@@ -116,6 +116,8 @@ def normalize_textual_columns(df = None):
                 .str.strip()
                 .str.lower()
             ) 
+
+    df = apply_rules(df)        
 
 
     logger.debug("\nnormalize_textual_columns\n")
