@@ -157,11 +157,12 @@ def clean_text_data(df= None):
             logger.error(f"❌ Arquivo não encontrado: {e}")
 
 
- #remome linhas em registros nas colunas críticas
+ #remove linhas em registros nas colunas críticas
     critic_columuns = ['country', 'year', 'technology']
 
     before = len(df)
 
+    removed_any = False
     for col in critic_columuns:
         null_before = df[col].isna().sum()
         if null_before > 0:
