@@ -186,8 +186,8 @@ def clean_text_data(df= None):
 
 
     after = len(df)
-    print(f"Total removido: {before - after} registros")
-    print(f"Mantidos: {after} registros com identificação completa") 
+    logger.info(f"Total removido após limpeza de dados: {before - after} registros")
+    logger.info(f"Mantidos: {after} registros com identificação completa") 
 
 
     logger.debug("\nclean_critic_colmuns\n")
