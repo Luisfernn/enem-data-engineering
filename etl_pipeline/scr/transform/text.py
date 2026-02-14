@@ -168,7 +168,10 @@ def clean_text_data(df= None):
             logger.info(f"⚠️ {null_before} registros sem '{col}' - removendo... ")
             df = df.dropna(subset=[col])
         else:
-            logger.info("✅ Nenhum registro com valor nulo nas colunas críticas!")   
+            removed_any = True
+
+    if not removed_any:
+        logger.info("✅ Nenhum registro com valor nulo nas colunas críticas!")           
 
 
  #remove linhas com valor inválido na coluna country
