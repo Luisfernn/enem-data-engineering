@@ -18,8 +18,6 @@ pd.set_option('display.max_columns', None)
 logger.debug(df.info())
 
 
-def round_metrics(df)
-
 metric_columns = [
     'eletricity_generation_gwh',
     'eletricity_installed_capacity_mw',
@@ -28,6 +26,9 @@ metric_columns = [
     'international_public_flows_usd_m',
     'capacity_per_capta_w'
 ]
+
+
+def round_metrics(df)
 
 for col in metric_columns:
     if col in df.columns:
