@@ -53,6 +53,7 @@ def normalize_text_columns(df = None):
     return df
 
 
+
 def apply_text_rules(df):
 
     detail_col = ['technology', 'sub_technology']
@@ -85,6 +86,7 @@ def apply_text_rules(df):
             df[col] = df[col].replace(tech_mapping)                              
 
     return df                       
+
 
 
 # normaliza dados de colunas textuais
