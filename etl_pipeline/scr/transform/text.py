@@ -198,7 +198,7 @@ if __name__ == "__main__":
     df = pd.read_csv(FILE_PATH)
     logger.info(f"📊 Carregados {len(df)} registros\n")
 
-    df = normalize_text_columns()
+    df = normalize_text_columns(df)
     df = normalize_text_data(df)
     df = clean_text_data(df)
 
