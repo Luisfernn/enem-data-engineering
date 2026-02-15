@@ -58,11 +58,7 @@ def fill_nan_numeric_data(df):
     logger.debug(f"NaNs antes: {nans_before}, depois: {nans_after}")
     logger.debug(f"{df.tail(5)}")
 
-    return df
-
-
-
-df = df.dropna(subset=['year'])    
+    return df    
 
 
 
@@ -71,11 +67,13 @@ def clean_numeric_data(df):
     
     before = len(df)
 
+    df = df.dropna(subset=['year'])
+
     df = df.dropna(subset=metric_columns, how='all')
 
     after = len(df)
     removed = before - after
 
-    logger.info(f" Removidos {removed} registros sem nenhuma métrica\n")
+    logger.info(f" Removidos {removed} registros\n")
 
     return df
