@@ -29,7 +29,7 @@ metric_columns = [
 
 
 
-def round_metrics(df)
+def round_metrics(df):
 
 for col in metric_columns:
     if col in df.columns:
