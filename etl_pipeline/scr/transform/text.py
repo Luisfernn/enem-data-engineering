@@ -202,7 +202,7 @@ if __name__ == "__main__":
     df = normalize_text_data(df)
     df = clean_text_data(df)
 
-    df.to_csv(OUTPUT_DIR, index=False)
+    df.to_csv(OUTPUT_PATH, index=False)
     
     logger.info("="*60)
     logger.info("✅ TRANSFORMAÇÕES TEXTUAIS CONCLUÍDAS")
