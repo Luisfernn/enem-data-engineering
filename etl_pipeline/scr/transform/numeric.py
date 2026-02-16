@@ -67,7 +67,8 @@ def clean_numeric_data(df):
 
     df = df.dropna(subset=['year'])
 
-    df = df.dropna(subset=metric_columns, how='all')
+    mask = df[metric_columns].replace(0, pd.NA).isna().all(axis=1)
+    df = df[~mask]
 
     after = len(df)
     removed = before - after
