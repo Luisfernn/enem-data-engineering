@@ -31,9 +31,9 @@ metric_columns = [
 
 def round_metrics(df):
 
-for col in metric_columns:
-    if col in df.columns:
-        df[col] = df[col].round(2)
+    for col in metric_columns:
+        if col in df.columns:
+            df[col] = df[col].round(2)
 
 logger.debug(f"\nApós arrendondamento: \n{df[metric_columns].head()}")
 logger.info(f"✅ Dados numéricos arredondados!")     
