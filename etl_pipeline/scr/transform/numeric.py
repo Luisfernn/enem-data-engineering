@@ -42,7 +42,7 @@ def clean_numeric_data(df):
     removed = before - after
 
     logger.info(f"Removidos {removed} registros\n")
-    logger.info("\n✅ Limpeza de dados concluída com sucesso!")
+    logger.info("\n✅ Limpeza de dados concluída!")
     logger.debug(f"{df.tail(5)}")
 
     return df
