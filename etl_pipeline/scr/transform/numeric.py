@@ -35,10 +35,10 @@ def round_metrics(df):
         if col in df.columns:
             df[col] = df[col].round(2)
 
-logger.debug(f"\nApós arrendondamento: \n{df[metric_columns].head()}")
-logger.info(f"✅ Dados numéricos arredondados!")     
+    logger.debug(f"\nApós arrendondamento: \n{df[metric_columns].head()}")
+    logger.info(f"✅ Dados numéricos arredondados!")     
 
-return df
+    return df
 
 
 def fill_nan_numeric_data(df):
