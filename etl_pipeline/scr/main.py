@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = BASE_DIR / 'data' / 'processed'
 
 LOG_DIR = BASE_DIR / 'data' / 'logs'
-log_dir_mkdir(parents=True, exist_ok=True)
+LOG_DIR.mkdir(parents=True, exist_ok=True)
 
 
 logging.basicConfig(
