@@ -106,3 +106,6 @@ if __name__ == "__main__":
     df = clean_numeric_data(df)
     df = fill_nan_numeric_data(df)
     df = round_metrics(df)
+
+    logger.debug("\n📊 Dados pós transformações:\n")
+    logger.debug(f"{df.tail(5)}")
