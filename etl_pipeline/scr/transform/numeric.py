@@ -27,16 +27,25 @@ metric_columns = [
 
 
 
-def round_metrics(df):
 
-    for col in metric_columns:
-        if col in df.columns:
-            df[col] = df[col].round(2)
+def clean_numeric_data(df):
 
-    logger.debug(f"\nApós arrendondamento: \n{df[metric_columns].head()}")
-    logger.info(f"✅ Dados numéricos arredondados!")     
+    
+    before = len(df)
+
+    df = df.dropna(subset=['year'])
+
+    mask = df[metric_columns].replace(0, pd.NA).isna().all(axis=1)
+    df = df[~mask]
+
+    after = len(df)
+    removed = before - after
+
+    logger.info(f" Removidos {removed} registros\n")
 
     return df
+
+
 
 
 def fill_nan_numeric_data(df):
@@ -60,22 +69,18 @@ def fill_nan_numeric_data(df):
 
 
 
-def clean_numeric_data(df):
 
-    
-    before = len(df)
+def round_metrics(df):
 
-    df = df.dropna(subset=['year'])
+    for col in metric_columns:
+        if col in df.columns:
+            df[col] = df[col].round(2)
 
-    mask = df[metric_columns].replace(0, pd.NA).isna().all(axis=1)
-    df = df[~mask]
-
-    after = len(df)
-    removed = before - after
-
-    logger.info(f" Removidos {removed} registros\n")
+    logger.debug(f"\nApós arrendondamento: \n{df[metric_columns].head()}")
+    logger.info(f"✅ Dados numéricos arredondados!")     
 
     return df
+
 
 
 
