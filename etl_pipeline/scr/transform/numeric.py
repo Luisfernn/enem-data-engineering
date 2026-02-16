@@ -3,7 +3,7 @@ from pathlib import Path
 
 import logging
 
-logger = logger.getLogger(__name__)
+logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 logger.propagate = False
 
