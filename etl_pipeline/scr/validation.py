@@ -40,7 +40,7 @@ def validate_columns(df):
     currently_columns = df.columns.tolist()
 
     if expected_columns == currently_columns:
-        logger.info(f"Todas as {len(expected_columns)} colunas presentes e na ordem correta\n")
+        logger.info(f"✅ Todas as {len(expected_columns)} colunas presentes e na ordem correta\n")
     else:
         missing = set(expected_columns) - set(currently_columns)
         extra = set(currently_columns) - set(expected_columns)
