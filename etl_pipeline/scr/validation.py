@@ -56,6 +56,7 @@ def validate_columns(df):
     return df                  
 
 
+
     def nulls_year_column(df):
 
         null = df['year'].isna().sum()
@@ -68,6 +69,27 @@ def validate_columns(df):
         return df        
 
 
+
+def generation_without_instaled_capacity(df):
+
+    gen_w_cap = df[(df['eletricity_generation_gwh'] > 0) & (df['eletricity_installed_capacity_mw'] <= 0)]
+
+    per_w_cap = df[(df['capacity_per_capta_w'] > 0) & (df['eletricity_installed_capacity_mw'] <= 0)]
+    
+
+    if len(gen_w_cap) > 0:
+        logger.warning("\n⚠️ Não tem capacidade de energia instalada onde tem geração energia!")
+    else:
+        logger.info("\n✅ Tem capacidade de energia instalada onde tem geração de energia!")
+           
+
+    if len(per_w_cap) > 0:
+        logger.warning("\n⚠️ Não tem capacidade de energia instalada onde tem capacidade de energia per capta!")
+    else:
+        logger.info("\n✅ Tem capacidade de energia instalada onde tem capacidade de energia per capta!")
+
+
+    return df
 
 
 
