@@ -46,12 +46,12 @@ def validate_columns(df):
         extra = set(currently_columns) - set(expected_columns)
         wrong_order = currently_columns != expected_columns 
 
-    if missing:
-        logger.error(f"❌ Colunas faltando: {missing}")
-    if extra:
-        logger.error(f"❌ Colunas extras: {extra}")
-    if wrong_order:
-        logger.error(f"❌ Ordem incorreta!\n Esperando: {expected_columns}\n Atual: {currently_columns} ")   
+        if missing:
+            logger.error(f"❌ Colunas faltando: {missing}")
+        if extra:
+            logger.error(f"❌ Colunas extras: {extra}")
+        if wrong_order:
+            logger.error(f"❌ Ordem incorreta!\n Esperando: {expected_columns}\n Atual: {currently_columns} ")   
 
     return df                  
 
