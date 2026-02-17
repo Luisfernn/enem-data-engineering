@@ -107,5 +107,7 @@ if __name__ == "__main__":
     df = fill_nan_numeric_data(df)
     df = round_metrics(df)
 
+    df.to_csv(OUTPUT_PATH, index=False)
+
     logger.debug("\n📊 Dados pós transformações:\n")
     logger.debug(f"{df.tail(5)}")
