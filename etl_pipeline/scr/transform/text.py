@@ -156,8 +156,18 @@ def clean_text_data(df):
 
 
  #remove linhas com valor inválido na coluna country
-    invalid_region = ['Unspecified Countries']
-    mask = df['country'].isin(invalid_region)
+    invalid_country = [
+        'Residual/Unallocated Oda: Sub-Saharan Africa',
+        'Residual/Unallocated Oda: Latin America And The Caribbean',
+        'Residual/Unallocated Oda: Central Asia And Southern Asia',
+        'Residual/Unallocated Oda: Western Asia\xa0And Northern Africa',
+        'Residual/Unallocated Oda: Eastern And South-Eastern Asia',
+        'Residual/Unallocated Oda: Northern America And Europe',
+        'Residual/Unallocated Oda: Oceania Excl. Aus. And N. Zealand',
+        'European Union (27)',
+        'Multilateral'
+    ]
+    mask = df['country'].isin(invalid_country)
     count = mask.sum()
     if count > 0:
         logger.info(f"⚠️  {count} registros com country inválido - removendo...")
