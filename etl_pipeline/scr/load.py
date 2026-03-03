@@ -1,14 +1,23 @@
+import sys
+import os
 import pandas as pd
 import logging
 from sqlalchemy import text
 from pathlib import Path
+
+# FORÇA O CAMINHO ANTES DE TUDO
+# Adiciona a raiz /opt/airflow ao sistema de busca do Python
+root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if root_path not in sys.path:
+    sys.path.insert(0, root_path)
+if "/opt/airflow" not in sys.path:
+    sys.path.insert(0, "/opt/airflow")
 try:
     from config import get_engine, check_connection
-except ImportError:
-    # Se falhar o import direto, tenta subir um nível (import relativo)
-    import sys
-    import os
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+except ImportError as e:
+    logging.error(f"Erro crítico de importação no load.py: {e}")
+    # Última tentativa caso o Docker mude o contexto
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     from config import get_engine, check_connection
 
 logger = logging.getLogger(__name__)
@@ -16,6 +25,7 @@ logger = logging.getLogger(__name__)
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROCESSED_DIR = BASE_DIR / 'data' / 'processed'
 INPUT_FILE = PROCESSED_DIR / 'renewable_energy_data_final.csv'
+
 
 
 def load_dimensions(df, conn):
