@@ -8,3 +8,6 @@ psycopg2-binary==2.9.9
 
 # Variáveis de ambiente
 python-dotenv==1.0.0
+
+# Orquestração da pipeline
+apache-airflow==2.8.1
