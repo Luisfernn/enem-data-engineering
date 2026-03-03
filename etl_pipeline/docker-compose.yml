@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  postgres:
+  postgres_dw:
     image: postgres:15
-    container_name: renewable_energy_db
+    container_name: renewable_energy_dw
     environment:
       POSTGRES_DB: renewable_energy
       POSTGRES_USER: postgres
@@ -12,7 +12,67 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - dw_data:/var/lib/postgresql/data
+    networks:
+      - airflow_network
+
+  # --- BANCO DE METADADOS DO AIRFLOW (Onde o Airflow guarda as configurações) ---
+  postgres_airflow:
+    image: postgres:15
+    container_name: airflow_db
+    environment:
+      POSTGRES_DB: airflow
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow_password
+    networks:
+      - airflow_network
+
+  # --- AIRFLOW WEBSERVER (A interface visual que você quer acessar) ---
+  airflow-webserver:
+    image: apache/airflow:2.8.1
+    container_name: airflow_webserver
+    depends_on:
+      - postgres_airflow
+    environment:
+      - LOAD_EXEMPLE=n
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow_password@postgres_airflow/airflow
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./scr:/opt/airflow/scr
+      - ./data:/opt/airflow/data
+      - ./requirements.txt:/requirements.txt
+    ports:
+      - "8080:8080"
+    command: webserver
+    networks:
+      - airflow_network
+
+  # --- AIRFLOW SCHEDULER (O motor que decide quando rodar as tarefas) ---
+  airflow-scheduler:
+    image: apache/airflow:2.8.1
+    container_name: airflow_scheduler
+    depends_on:
+      - postgres_airflow
+    environment:
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow_password@postgres_airflow/airflow
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./scr:/opt/airflow/scr
+      - ./data:/opt/airflow/data
+    command: scheduler
+    networks:
+      - airflow_network
+
+networks:
+  airflow_network:
+    driver: bridge
 
 volumes:
-  postgres_data:
+  dw_data:
+  airflow_db_data:
