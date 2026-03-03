@@ -30,20 +30,38 @@ except ImportError as e:
     )
     from scr.load import load_data
 
+
 # 3. Função Wrapper (Ponte)
-def run_full_transformation_and_load():
-    print("Iniciando Extração...")
+def run_full_pipeline_dag():
+    print("🚀 Iniciando Pipeline ETL no Airflow...")
+    
+    # 1. Extração
     df = extract_data()
-    
-    print("Iniciando Transformação...")
+
+    # 2. Transformações Textuais
     df = normalize_text_columns(df)
+    df = normalize_text_data(df)
     df = clean_text_data(df)
+
+    # 3. Transformações Numéricas
     df = clean_numeric_data(df)
+    df = fill_nan_numeric_data(df)
     df = round_metrics(df)
-    
-    print("Iniciando Carga no DW...")
+
+    # 4. Validação
+    print("🔍 Executando check de qualidade...")
+    df = validate_columns(df)
+    df = validate_registers_count(df)
+    df = nulls_year_column(df)
+    df = validate_regions(df)
+    df = validate_country_count(df)
+    df = generation_without_instaled_capacity(df)
+    df = validate_composed_key(df)
+
+    # 5. Carga Final
+    print("💾 Carregando dados no Data Warehouse...")
     load_data(df)
-    print("Processo concluído com sucesso!")
+    print("✅ Pipeline concluído com sucesso!")
 
 # 4. Configurações padrão
 default_args = {
