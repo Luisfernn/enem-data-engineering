@@ -2,7 +2,14 @@ import pandas as pd
 import logging
 from sqlalchemy import text
 from pathlib import Path
-from config import get_engine, check_connection
+try:
+    from config import get_engine, check_connection
+except ImportError:
+    # Se falhar o import direto, tenta subir um nível (import relativo)
+    import sys
+    import os
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+    from config import get_engine, check_connection
 
 logger = logging.getLogger(__name__)
 
