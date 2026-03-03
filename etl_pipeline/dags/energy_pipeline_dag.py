@@ -1,21 +1,33 @@
 import sys
 import os
 
+# Força a raiz do Airflow no Docker
 sys.path.insert(0, os.path.abspath("/opt/airflow"))
 
 try:
-    # Tentativa 1: Importação padrão via pacote 'scr'
+    # Importações seguindo a estrutura de pastas
     from scr.extract import extract_data
     from scr.transform.text import normalize_text_columns, normalize_text_data, clean_text_data
     from scr.transform.numeric import clean_numeric_data, fill_nan_numeric_data, round_metrics
+    # Importando todas as validações
+    from scr.validate import (
+        validate_columns, validate_registers_count, nulls_year_column,
+        validate_regions, validate_country_count, 
+        generation_without_instaled_capacity, validate_composed_key
+    )
     from scr.load import load_data
 except ImportError as e:
-    print(f"Aviso: Fallback de importação acionado. Erro: {e}")
+    print(f"⚠️ Fallback de importação acionado: {e}")
     # Tentativa 2: Importação garantindo o config primeiro
-    import config 
+    import config
     from scr.extract import extract_data
     from scr.transform.text import normalize_text_columns, normalize_text_data, clean_text_data
     from scr.transform.numeric import clean_numeric_data, fill_nan_numeric_data, round_metrics
+    from scr.validate import (
+        validate_columns, validate_registers_count, nulls_year_column,
+        validate_regions, validate_country_count, 
+        generation_without_instaled_capacity, validate_composed_key
+    )
     from scr.load import load_data
 
 # 3. Função Wrapper (Ponte)
