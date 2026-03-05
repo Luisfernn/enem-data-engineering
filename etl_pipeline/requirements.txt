@@ -4,7 +4,7 @@ numpy==1.24.4
 openpyxl
 
 # Banco de dados
-sqlalchemy==2.0.23
+sqlalchemy==1.4.49
 psycopg2-binary==2.9.9
 
 # Variáveis de ambiente
