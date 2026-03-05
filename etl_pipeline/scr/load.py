@@ -29,7 +29,6 @@ INPUT_FILE = PROCESSED_DIR / 'renewable_energy_data_final.csv'
 
 
 def load_dimensions(df, conn):
-
     logger.info("Carregando dimensões...")
 
     # dim_country
@@ -60,80 +59,99 @@ def load_dimensions(df, conn):
     logger.info("✅ Dimensões carregadas!\n")
 
 
+
 def get_ids_dimensions(df, conn):
-
     logger.info("Mapeando IDs das dimensões...")
-
-    # Lê as dimensões do banco
+    
+    # Dentro da transação, o pd.read_sql usa a conexão 'conn'
     dim_country = pd.read_sql('SELECT country_id, country FROM dim_country', conn)
     dim_tech = pd.read_sql('SELECT technology_id, technology FROM dim_technology', conn)
     dim_time = pd.read_sql('SELECT time_id, year FROM dim_time', conn)
     dim_producer = pd.read_sql('SELECT producer_id, producer_type FROM dim_producer', conn)
     
-    # Faz merge para obter IDs
     df = df.merge(dim_country, on='country', how='left')
     df = df.merge(dim_tech, on='technology', how='left')
     df = df.merge(dim_time, on='year', how='left')
     df = df.merge(dim_producer, on='producer_type', how='left')
     
     logger.info("✅ IDs mapeados!\n")
-    
     return df
 
 
+
 def load_fact(df, conn):
-
     logger.info("Carregando tabela fato...")
-
-    # Seleciona apenas colunas necessárias
     df_fact = df[[
         'country_id', 'technology_id', 'time_id', 'producer_id',
         'electricity_generation_gwh', 'electricity_installed_capacity_mw', 'heat_generation_tj',
         'total_public_flows_usd_m', 'international_public_flows_usd_m',
         'capacity_per_capita_w'
     ]]
-
-    # Insere
     df_fact.to_sql('fact_energy_generation', conn, if_exists='append', index=False, chunksize=500)
-    
     logger.info(f"✅ {len(df_fact)} registros inseridos na tabela fato!\n")
 
 
+
 def load_data(df):
-    """Pipeline completo de carga"""
+    """Pipeline completo de carga com Atomicidade (Tudo ou Nada)"""
     logger.info("="*60)
     logger.info("📤 INICIANDO CARGA NO DATA WAREHOUSE")
     logger.info("="*60 + "\n")
 
     if not check_connection():
+        logger.error("❌ Falha na conexão com o banco de dados.")
         return
+    engine = get_engine()
 
     try:
-
-        engine = get_engine()    
-
+        # Abertura da transação: Se qualquer linha abaixo falhar, o banco faz ROLLBACK
         with engine.begin() as conn:
-            # Limpa tabelas antes de recarregar (evita duplicatas)
-            logger.info("🗑️  Limpando tabelas...")
-            conn.execute(text("TRUNCATE TABLE fact_energy_generation, dim_country, dim_technology, dim_time, dim_producer RESTART IDENTITY CASCADE"))
-            logger.info("✅ Tabelas limpas!\n")
+            
+            logger.info("🗑️  Limpando tabelas (Iniciando Transação)...")
+            # TRUNCATE preserva a estrutura. RESTART IDENTITY reseta os IDs (Serial).
+            conn.execute(text("""
+                TRUNCATE TABLE fact_energy_generation, 
+                               dim_country, 
+                               dim_technology, 
+                               dim_time, 
+                               dim_producer 
+                RESTART IDENTITY CASCADE;
+            """))
+            logger.info("✅ Tabelas limpas!")
 
             # Carrega dimensões
             load_dimensions(df, conn)
 
-            # Mapeia IDs
+            # Mapeia IDs (Busca no banco o que acabou de ser inserido)
             df_with_ids = get_ids_dimensions(df, conn)
 
             # Carrega fato
             load_fact(df_with_ids, conn)
-        
+            
+            # Se o código chegar aqui, o SQLAlchemy envia automaticamente o COMMIT.
+            logger.info("✅ Carga transacional finalizada com sucesso!")
+
         logger.info("="*60)
-        logger.info("✅ CARGA CONCLUÍDA COM SUCESSO!")
+        logger.info("🚀 PROCESSO CONCLUÍDO")
         logger.info("="*60)
         
     except Exception as e:
-        logger.error(f"❌ Erro na carga: {e}")
-        raise
+        # o erro dispara o rollback do TRUNCATE
+        logger.error(f"❌ ERRO CRÍTICO NA CARGA: {e}")
+        logger.error("⏪ Rollback executado: Seus dados antigos (se existiam) foram preservados.")
+        raise e  # raise para que o Airflow capture o erro e marque a tarefa como failed
+
+if __name__ == "__main__":
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter("%(message)s"))
+    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)
+
+    if INPUT_FILE.exists():
+        df = pd.read_csv(INPUT_FILE)
+        load_data(df)
+    else:
+        logger.error(f"❌ Arquivo não encontrado: {INPUT_FILE}")
 
 
 if __name__ == "__main__":
